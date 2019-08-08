@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -26,9 +27,9 @@ namespace jQuerySlideViewASPNET_MVC.Controllers
             string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
             string extension=Path.GetExtension(model.ImageFile.FileName);
             fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            model.ImagePath = "~/Image" + fileName;
-            fileName = Path.Combine(Server.MapPath("~/Image"), fileName); 
-            model.ImageFile.SaveAs(fileName);
+            model.ImagePath = "/Image/" + fileName;
+          string   path = Path.Combine(Server.MapPath("/Image/"), fileName); 
+            model.ImageFile.SaveAs(path);
            
             using (Db db = new Db())
             {
@@ -39,6 +40,18 @@ namespace jQuerySlideViewASPNET_MVC.Controllers
  
 
             return RedirectToAction("Add");
+        }
+        [DisplayName("View")]
+        public ActionResult Show()
+        {
+            List<StudentInformation> model = new List<StudentInformation>();
+          //  var a = Mapper.Map<StudentInformation>(model);
+            using (Db db = new Db())
+            {
+                model = db.StudentInformations.ToList();
+            }
+
+            return View(model);
         }
     }
 }
