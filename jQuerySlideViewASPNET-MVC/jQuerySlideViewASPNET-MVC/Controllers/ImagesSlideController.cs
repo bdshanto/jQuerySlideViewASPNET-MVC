@@ -44,8 +44,7 @@ namespace jQuerySlideViewASPNET_MVC.Controllers
         [DisplayName("View")]
         public ActionResult Show()
         {
-            List<StudentInformation> model = new List<StudentInformation>();
-          //  var a = Mapper.Map<StudentInformation>(model);
+            List<StudentInformation> model = new List<StudentInformation>(); 
             using (Db db = new Db())
             {
                 model = db.StudentInformations.ToList();
@@ -53,5 +52,20 @@ namespace jQuerySlideViewASPNET_MVC.Controllers
 
             return View(model);
         }
+
+
+        public ActionResult Slide()
+        {
+            List<StudentInformation> model = new List<StudentInformation>(); 
+            using (Db db = new Db())
+            {
+                model = db.StudentInformations.ToList();
+            }
+
+            return View(model);
+        }
+
+
+
     }
 }
